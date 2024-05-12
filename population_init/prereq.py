@@ -7,7 +7,6 @@ class SystemSettings:
         self.gender_dist = gender_dist
         self.age_max = age_max
         self.age_min = age_min
-        self.age_med = 0
         self.age_distr = {}
 
     def populationData(self):
@@ -16,7 +15,7 @@ class SystemSettings:
         female = round(self.pop_size - male)
         
         # Read the average percentages from the CSV file
-        average_percentages = pd.read_csv('data/age/nycAgeData.csv', index_col=0)
+        average_percentages = pd.read_csv('population_init/data/age/nycAgeData.csv', index_col=0)
 
         # Adjust percentages based on age range
         total_population = 0
@@ -58,29 +57,16 @@ class SystemSettings:
             "female": female
         }
 
-        # Update other attributes
-        self.age_med = 0
-
         # Return the updated system settings data
         return {
             "population_size": self.pop_size,
             "gender_distribution": self.gender_dist,
             "age_distribution": self.age_distr,
-            "average_age": self.age_med
         }
 
     def saveData(self):
         # Save the system settings to JSON file
         data = self.populationData()
-        with open('data/sim_data/system.json', 'w') as file:
+        with open('population_init/data/sim_data/system.json', 'w') as file:
             json.dump(data, file, indent=4)
         print("Data saved successfully!")
-
-# Example usage
-pop_size = int(input("Enter population size: "))
-gender_dist = float(input("Enter gender distribution (percentage of males): "))
-age_max = int(input("Enter the maximum age: "))
-age_min = int(input("Enter the minimum age: "))
-
-settings = SystemSettings(pop_size, gender_dist, age_max, age_min)
-settings.saveData()

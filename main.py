@@ -1,4 +1,4 @@
-from prereq import SystemSettings
+from population_init.prereq import SystemSettings
 
 
 pop_size = int(input("Enter population size: "))
